@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skyrmion_solver"
+version = "1.0.0"
+description = "GPU-accelerated framework for computing skyrmions in 3D field theories."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+authors = [
+  { name = "Paul Leask" }
+  { name = "Sven Bjarke Gudnason" }
+]
+
+dependencies = [
+  "numpy",
+  "numba-cuda",
+  "moderngl",
+  "glfw",
+  "PyOpenGL",
+  "cuda-python"
+]
+
+keywords = [
+  "skyrmions",
+  "PDE",
+  "GPU",
+  "numba",
+  "CUDA",
+  "physics"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+
+[project.urls]
+Homepage = "https://github.com/Paulnleask/skyrmion_solver"
+Repository = "https://github.com/Paulnleask/skyrmion_solver"
+Issues = "https://github.com/Paulnleask/skyrmion_solver/issues"
+
+[project.optional-dependencies]
+
+dev = [
+  "pytest",
+  "ruff",
+  "build",
+  "twine"
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["skyrmion_solver*"]
+exclude = ["tests*", "docs*"]
