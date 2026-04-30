@@ -27,12 +27,12 @@ from skyrmion_solver.visualization.gl_backend import GLBackend, cuda_array_from_
 from skyrmion_solver.theories.omega_skyrme.observables import compute_skyrmion_number
 
 DISPLAY_ENERGY_SINGLE = 1
-DISPLAY_ENERGY_RUNGE = 2
+DISPLAY_BARYON = 2
 DISPLAY_OMEGA = 3
 
 DISPLAY_TITLES = {
     DISPLAY_ENERGY_SINGLE: "Omega-Skyrme: Energy density",
-    DISPLAY_ENERGY_RUNGE: "Omega-Skyrme: Energy density (Runge)",
+    DISPLAY_BARYON: "Omega-Skyrme: Baryon density",
     DISPLAY_OMEGA: "Omega-Skyrme: Omega-meson density"
 }
 
@@ -414,7 +414,7 @@ class GLRenderer:
         --------
         Use ``self._sync_render_params()`` before drawing a frame.
         """
-        color_mode = 1 if self.display_mode == DISPLAY_ENERGY_RUNGE else 0
+        color_mode = 1 if self.display_mode == DISPLAY_BARYON else 0
         kwargs = dict(
             brightness=self.brightness,
             levelset=self.levelset,
@@ -530,7 +530,7 @@ class GLRenderer:
             return
 
         if key == glfw.KEY_F2:
-            self.set_display_mode(DISPLAY_ENERGY_RUNGE)
+            self.set_display_mode(DISPLAY_BARYON)
             return
         
         if key == glfw.KEY_F3:
@@ -701,7 +701,7 @@ class GLRenderer:
 
         Examples
         --------
-        Use ``renderer.set_display_mode(DISPLAY_ENERGY_RUNGE)`` to switch the display mode.
+        Use ``renderer.set_display_mode(DISPLAY_BARYON)`` to switch the display mode.
         """
         if mode not in DISPLAY_TITLES:
             return
@@ -960,8 +960,8 @@ def _compute_density_for_mode(sim, mode: int) -> None:
         sim.compute_potential_density()
         return
 
-    if hasattr(sim, "compute_energy_density"):
-        sim.compute_energy_density()
+    if hasattr(sim, "compute_baryon_density"):
+        sim.compute_baryon_density()
 
 
 def run_viewer(sim, params, *, steps_per_frame: int = 5) -> None:

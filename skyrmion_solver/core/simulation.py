@@ -233,6 +233,23 @@ class Simulation:
         self.kernels.compute_energy_kernel[grid3d, block3d](self.en, self.Field, self.d1fd1x, self.p_i_d, self.p_f_d)
         cuda.synchronize()
 
+    def compute_baryon_density(self):
+        """
+        Compute the per site baryon density into the shared ``en`` buffer.
+
+        Returns
+        -------
+        None
+            The baryon density is written into ``en``.
+
+        Examples
+        --------
+        Use ``sim.compute_baryon_density()`` before copying ``sim.en`` to the host.
+        """
+        grid3d, block3d = launch_3d(self.p_i_h, threads=self.threads3d)
+        self.kernels.compute_skyrmion_number_kernel[grid3d, block3d](self.en, self.Field, self.d1fd1x, self.p_i_d, self.p_f_d)
+        cuda.synchronize()
+
     def compute_potential_density(self):
         """
         Compute the per site potential density into the shared ``en`` buffer.

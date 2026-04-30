@@ -27,11 +27,11 @@ from skyrmion_solver.visualization.gl_backend import GLBackend, cuda_array_from_
 from skyrmion_solver.theories.nuclear_skyrme.observables import compute_skyrmion_number
 
 DISPLAY_ENERGY_SINGLE = 1
-DISPLAY_ENERGY_RUNGE = 2
+DISPLAY_BARYON = 2
 
 DISPLAY_TITLES = {
     DISPLAY_ENERGY_SINGLE: "Nuclear Skyrme: Energy density",
-    DISPLAY_ENERGY_RUNGE: "Nuclear Skyrme: Energy density (Runge)",
+    DISPLAY_BARYON: "Nuclear Skyrme: Baryon density",
 }
 
 _REDUCE_BLOCK_SIZE = 256
@@ -542,7 +542,7 @@ class GLRenderer:
             return
 
         if key == glfw.KEY_F2:
-            self.set_display_mode(DISPLAY_ENERGY_RUNGE)
+            self.set_display_mode(DISPLAY_BARYON)
             return
 
         if key == glfw.KEY_O:
@@ -738,7 +738,7 @@ class GLRenderer:
 
         Examples
         --------
-        Use ``renderer.set_display_mode(DISPLAY_ENERGY_RUNGE)`` to switch the display mode.
+        Use ``renderer.set_display_mode(DISPLAY_BARYON)`` to switch the display mode.
         """
         if mode not in DISPLAY_TITLES:
             return
@@ -994,8 +994,8 @@ def _compute_density_for_mode(sim, mode: int) -> None:
     Use ``_compute_density_for_mode(sim, renderer.display_mode)`` before rendering a frame.
     """
     _ = mode
-    if hasattr(sim, "compute_energy_density"):
-        sim.compute_energy_density()
+    if hasattr(sim, "compute_baryon_density"):
+        sim.compute_baryon_density()
 
 
 def run_viewer(sim, params, *, steps_per_frame: int = 5) -> None:
